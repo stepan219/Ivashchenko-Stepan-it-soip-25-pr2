@@ -1,0 +1,104 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApp1
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Delivery d1 = new StandardDelivery("Стандартная");
+            Delivery d2 = new ExpressDelivery("Экспресс");
+            Delivery d3 = new InternationalDelivery("Международная");
+
+            decimal basePrice = 20m;
+
+            d1.CalculatePrice(basePrice);
+            d2.CalculatePrice(basePrice);
+            d3.CalculatePrice(basePrice);
+
+            Console.WriteLine(d1.ToString());
+            Console.WriteLine(d2.ToString());
+            Console.WriteLine(d3.ToString());
+
+        }
+        abstract class Delivery
+        {
+            protected string name;
+            protected decimal price;
+
+            public string Name
+            {
+                get { return name; }
+                set
+                {
+                    if (string.IsNullOrWhiteSpace(value))
+                    {
+                        Console.WriteLine("Ошибка: название не может быть пустым");
+                    }
+                    else if (value.Length > 20)
+                    {
+                        Console.WriteLine("Ошибка: название не должно превышать 20 символов");
+                    }
+                    else
+                    {
+                        name = value;
+                    }
+                }
+            }
+
+            public decimal Price
+            {
+                get { return price; }
+            }
+
+            public Delivery(string name)
+            {
+                Name = name;
+            }
+
+            public abstract void CalculatePrice(decimal basePrice);
+
+            public override string ToString()
+            {
+                return "Доставка: " + name + ", стоимость: " + price + " руб.";
+            }
+        }
+
+        class StandardDelivery : Delivery
+        {
+            public StandardDelivery(string name) : base(name) { }
+
+            public override void CalculatePrice(decimal basePrice)
+            {
+                price = basePrice * 1.0m;
+            }
+        }
+
+        class ExpressDelivery : Delivery
+        {
+            public ExpressDelivery(string name) : base(name) { }
+
+            public override void CalculatePrice(decimal basePrice)
+            {
+                price = basePrice * 2.5m;
+            }
+        }
+
+        class InternationalDelivery : Delivery
+        {
+            public InternationalDelivery(string name) : base(name) { }
+
+            public override void CalculatePrice(decimal basePrice)
+            {
+                price = basePrice * 4.0m;
+            }
+        }
+
+
+
+    }
+}
