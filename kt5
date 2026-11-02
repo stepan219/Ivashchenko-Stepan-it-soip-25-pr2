@@ -1,0 +1,66 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApp1
+{
+    internal class Program
+    {
+
+        static void Main(string[] args)
+        {
+            Box<int> intBox = new Box<int>();
+            intBox.Put(42);
+            Console.WriteLine($"Число в коробке: { intBox.Get()}");
+            Box<string> stringBox = new Box<string>();
+            stringBox.Put("Hello");
+            Console.WriteLine($"Строка в коробке: {stringBox.Get()}");
+            int num1 = 5;
+            int num2 = 10;
+            Utils.Swap(ref num1, ref num2);
+            Console.WriteLine($"Числа после Swap: {num1}, {num2}");
+            string str1 = "Hello";
+            string str2 = "World!";
+            Utils.Swap(ref str1, ref str2);
+            Console.WriteLine($"Строки после Swap: {str1}, {str2}");
+            Pair<int, string> twoPair = new Pair<int, string>(5, "Hello!");
+            Console.WriteLine($"Первое занчение: {twoPair.First}, Второе значение: {twoPair.Second} ");
+        }
+    }
+    public class Box<T>
+    {
+        private T _item;
+        public void Put(T item)
+        {
+            _item = item;
+        }
+        public T Get()
+        {
+            return _item;
+        }
+    }
+    public static class Utils
+    {
+        public static void Swap<T>(ref T a, ref T b)
+        {
+            T temp = a;
+            a = b;
+            b = temp;
+        }
+    }
+    public class Pair<T1, T2>
+    {
+        public T1 First { get; }
+        public T2 Second { get; }
+        public Pair(T1 first, T2 second)
+        {
+            First = first;
+            Second = second;
+        }
+    }
+        
+
+        
+}
